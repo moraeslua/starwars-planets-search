@@ -4,9 +4,21 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filterByName, setFilterByName] = useState('');
+
+  const filterPlanetsByName = () => {
+    const filteredPlanets = planets.filter(
+      (planet) => planet.name.includes(filterByName),
+    );
+    return filteredPlanets;
+  };
 
   const contextValue = {
-    planets, setPlanets,
+    planets,
+    setPlanets,
+    filterByName,
+    setFilterByName,
+    filterPlanetsByName,
   };
 
   return (

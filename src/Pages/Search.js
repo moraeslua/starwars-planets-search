@@ -5,12 +5,12 @@ import getPlanetsInfo from '../services';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Search() {
-  const { setPlanets } = useContext(PlanetsContext);
+  const { setPlanets, filterPlanetsByName } = useContext(PlanetsContext);
 
   useEffect(() => {
     const requestPlanetsInfo = async () => {
-      const planets = await getPlanetsInfo();
-      setPlanets(planets);
+      const planetsFromAPI = await getPlanetsInfo();
+      setPlanets(planetsFromAPI);
     };
     requestPlanetsInfo();
   }, [setPlanets]);
@@ -18,7 +18,7 @@ function Search() {
   return (
     <main>
       <Header />
-      <Table />
+      <Table filteredPlanetsByName={ filterPlanetsByName() } />
     </main>
   );
 }
