@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { columnList } from '../data';
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
   column: 'population',
   comparison: 'maior que',
-  value: '0',
+  value: 0,
 };
+
+let columnListToRender = [];
 
 function Header() {
   const {
@@ -25,6 +27,13 @@ function Header() {
     const newNumericFiltersList = [...numericFilters, localNumericFilters];
     setNumericFilters(newNumericFiltersList);
   };
+
+  useEffect(() => {
+    columnListToRender = columnList.filter((columnItem) => !numericFilters
+      .map((filter) => filter.column)
+      .includes(columnItem));
+    console.log('columnListToRender', columnListToRender);
+  }, [numericFilters]);
 
   return (
     <section>
@@ -47,7 +56,7 @@ function Header() {
           onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
           data-testid="column-filter"
         >
-          {columnList.map((option) => (
+          {columnListToRender.map((option) => (
             <option
               key={ option }
               value={ option }
