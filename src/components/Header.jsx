@@ -16,6 +16,13 @@ function Header() {
     numericFilters, setNumericFilters,
   } = useContext(PlanetsContext);
 
+  useEffect(() => {
+    columnListToRender = columnList.filter((columnItem) => !numericFilters
+      .map((filter) => filter.column)
+      .includes(columnItem));
+    console.log('columnListToRender', columnListToRender);
+  }, [numericFilters]);
+
   const [localNumericFilters, setLocalNumericFilters] = useState(
     NUMERIC_FILTERS_INITIAL_VALUE,
   );
@@ -28,12 +35,17 @@ function Header() {
     setNumericFilters(newNumericFiltersList);
   };
 
-  useEffect(() => {
-    columnListToRender = columnList.filter((columnItem) => !numericFilters
-      .map((filter) => filter.column)
-      .includes(columnItem));
-    console.log('columnListToRender', columnListToRender);
-  }, [numericFilters]);
+  const handleRemoveNumericFilter = (columnToRemove) => {
+    console.log('column', column);
+    const newNumericFiltersList = numericFilters.filter(
+      ({ column }) => column !== columnToRemove,
+    );
+    setNumericFilters(newNumericFiltersList);
+  };
+
+  const handleRemoveAllFilters = () => {
+    setNumericFilters([]);
+  };
 
   return (
     <section>
@@ -94,6 +106,30 @@ function Header() {
       >
         Filtrar
       </button>
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ handleRemoveAllFilters }
+      >
+        Remover todos os filtros
+      </button>
+      {numericFilters.map(({ column, comparison, value }) => (
+        <div key={ column } data-testid="filter">
+          <p>
+            {column}
+            {' '}
+            {comparison}
+            {' '}
+            {value}
+          </p>
+          <button
+            type="button"
+            onClick={ () => handleRemoveNumericFilter(column) }
+          >
+            X
+          </button>
+        </div>
+      ))}
     </section>
   );
 }
