@@ -1,21 +1,20 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
-import starWarsTableCell from '../data';
+import { starWarsTableHeading } from '../data';
 
-function Table({ filteredPlanetsByName }) {
-  const { planets } = useContext(PlanetsContext);
-  const planetsToRender = filteredPlanetsByName || planets;
+function Table() {
+  const { planetsListToRender } = useContext(PlanetsContext);
 
   return (
     <table>
       <thead>
         <tr>
-          {starWarsTableCell.map((cell) => <th key={ cell }>{ cell }</th>)}
+          {starWarsTableHeading.map((heading) => <th key={ heading }>{ heading }</th>)}
         </tr>
       </thead>
       <tbody>
-        {planetsToRender.map((planet) => (
+        {planetsListToRender.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
@@ -36,9 +35,5 @@ function Table({ filteredPlanetsByName }) {
     </table>
   );
 }
-
-Table.propTypes = {
-  filteredPlanetsByName: PropTypes.arrayOf(PropTypes.shape).isRequired,
-};
 
 export default Table;
