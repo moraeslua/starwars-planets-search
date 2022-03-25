@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { columnList } from '../data';
 
@@ -8,24 +8,19 @@ const NUMERIC_FILTERS_INITIAL_VALUE = {
   value: 0,
 };
 
-let columnListToRender = [];
-
 function Header() {
   const {
     filterByName, setFilterByName,
     numericFilters, setNumericFilters,
   } = useContext(PlanetsContext);
 
-  useEffect(() => {
-    columnListToRender = columnList.filter((columnItem) => !numericFilters
-      .map((filter) => filter.column)
-      .includes(columnItem));
-    console.log('columnListToRender', columnListToRender);
-  }, [numericFilters]);
-
   const [localNumericFilters, setLocalNumericFilters] = useState(
     NUMERIC_FILTERS_INITIAL_VALUE,
   );
+
+  const columnListToRender = columnList.filter((columnItem) => !numericFilters
+    .map((filter) => filter.column)
+    .includes(columnItem));
 
   const handleFilterByNumericValuesOnChange = ({ id, value }) => (
     setLocalNumericFilters({ ...localNumericFilters, [id]: value }));
@@ -36,7 +31,6 @@ function Header() {
   };
 
   const handleRemoveNumericFilter = (columnToRemove) => {
-    console.log('column', column);
     const newNumericFiltersList = numericFilters.filter(
       ({ column }) => column !== columnToRemove,
     );
