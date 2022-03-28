@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { numericFiltersOptions } from '../data';
 import Dropdown from './Dropdown';
+import Button from './Button';
+import Input from './Input';
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
   column: 'population',
@@ -63,17 +65,14 @@ function Header() {
 
   return (
     <section>
-      <label htmlFor="name-filter">
-        Filtrar por nome
-        { ' ' }
-        <input
-          id="name-filter"
-          type="text"
-          value={ filterByName }
-          data-testid="name-filter"
-          onChange={ ({ target: { value } }) => setFilterByName(value) }
-        />
-      </label>
+      <Input
+        label="Filtrar por nome"
+        id="name-filter"
+        type="text"
+        value={ filterByName }
+        testId="name-filter"
+        onChange={ ({ target: { value } }) => setFilterByName(value) }
+      />
       <Dropdown
         id="column-filter"
         name="column"
@@ -92,30 +91,24 @@ function Header() {
         onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
         testId="comparison-filter"
       />
-      <label htmlFor="value">
-        <input
-          id="value"
-          name="value"
-          type="number"
-          value={ localNumericFilters.value }
-          data-testid="value-filter"
-          onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
-        />
-      </label>
-      <button
-        type="button"
+      <Input
+        id="value"
+        name="value"
+        type="number"
+        value={ localNumericFilters.value }
+        testId="value-filter"
+        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+      />
+      <Button
+        label="Filtrar"
         onClick={ handleFilterButtonOnClick }
-        data-testid="button-filter"
-      >
-        Filtrar
-      </button>
-      <button
-        type="button"
-        data-testid="button-remove-filters"
+        testId="button-filter"
+      />
+      <Button
+        label="Remover todos os filtros"
+        testId="button-remove-filters"
         onClick={ handleRemoveAllFilters }
-      >
-        Remover todos os filtros
-      </button>
+      />
       <Dropdown
         id="column-sort"
         name="column"
@@ -125,35 +118,29 @@ function Header() {
         testId="column-sort"
         options={ numericFiltersOptions }
       />
-      <label htmlFor="sort-asc">
-        Ascendente
-        <input
-          id="sort-asc"
-          name="sort"
-          type="radio"
-          value="ASC"
-          data-testid="column-sort-input-asc"
-          onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
-        />
-      </label>
-      <label htmlFor="sort-desc">
-        Descendente
-        <input
-          id="sort-desc"
-          name="sort"
-          type="radio"
-          value="DESC"
-          data-testid="column-sort-input-desc"
-          onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="column-sort-button"
+      <Input
+        label="Ascendente"
+        id="sort-asc"
+        name="sort"
+        type="radio"
+        value="ASC"
+        testId="column-sort-input-asc"
+        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+      />
+      <Input
+        label="Descendente"
+        id="sort-desc"
+        name="sort"
+        type="radio"
+        value="DESC"
+        testId="column-sort-input-desc"
+        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+      />
+      <Button
+        label="Ordenar"
+        testId="column-sort-button"
         onClick={ handleSortColumnOnClick }
-      >
-        Ordenar
-      </button>
+      />
       {numericFilters.map(({ column, comparison, value }) => (
         <div key={ column } data-testid="filter">
           <p>
@@ -163,12 +150,10 @@ function Header() {
             {' '}
             {value}
           </p>
-          <button
-            type="button"
+          <Button
+            label="X"
             onClick={ () => handleRemoveNumericFilter(column) }
-          >
-            X
-          </button>
+          />
         </div>
       ))}
     </section>
