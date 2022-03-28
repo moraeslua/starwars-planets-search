@@ -2,54 +2,60 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
+export const NEGATIVE_ONE = -1;
+
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState('');
   const [planetsListToRender, setPlanetsListToRender] = useState([]);
   const [numericFilters, setNumericFilters] = useState([]);
+  const [sortPreference, setSortPreference] = useState({});
 
-  // ter um aplicador de filtro
-  // aplicar o filtro baseado em planetsListByFilter
-  // para cada filtro que existe, filtrar de planetsListByFilter
+  const applyNumericFilter = (numericFilter, planetsListToFilter) => {
+    const { column, comparison, value } = numericFilter;
+    if (comparison === 'igual a') {
+      return planetsListToFilter.filter(
+        (planet) => parseFloat(planet[column]) === parseFloat(value),
+      );
+    } if (comparison === 'maior que') {
+      return planetsListToFilter.filter((planet) => (
+        parseFloat(planet[column]) > parseFloat(value)));
+    } if (comparison === 'menor que') {
+      return planetsListToFilter.filter((planet) => (
+        parseFloat(planet[column]) < parseFloat(value)
+      ));
+    }
+  };
+
+  const applyOrderPreference = (planetListToOrder, orderPreference) => {
+    const { column, sort } = orderPreference;
+    return planetListToOrder.sort((a, b) => {
+      if (a[column] === 'unknown') return 1;
+      if (b[column] === 'unknown') return NEGATIVE_ONE;
+      return sort === 'ASC' ? (
+        parseFloat(a[column]) - parseFloat(b[column])
+      ) : (
+        parseFloat(b[column]) - parseFloat(a[column])
+      );
+    });
+  };
 
   useEffect(() => {
     const planetsList = filterByName ? planets.filter(
-      (planet) => {
-        console.log(planet.name.toLowerCase().includes(filterByName.toLowerCase()));
-        return planet.name.toLowerCase().includes(filterByName.toLowerCase());
-      },
+      (planet) => planet.name.toLowerCase().includes(filterByName.toLowerCase()),
     ) : planets;
 
-    let filteredPlanetsList = [...planetsList];
-
+    let newPlanetListToRender = [...planetsList];
     numericFilters.forEach((numericFilter) => {
-      const { column, comparison, value } = numericFilter;
-      if (comparison === 'igual a') {
-        console.log(comparison);
-        filteredPlanetsList = filteredPlanetsList.filter(
-          (planet) => parseFloat(planet[column]) === parseFloat(value),
-        );
-        console.log('copia', filteredPlanetsList);
-        return;
-      } if (comparison === 'maior que') {
-        console.log('comparison');
-        filteredPlanetsList = filteredPlanetsList.filter((planet) => {
-          console.log(planet[column], value);
-          return parseFloat(planet[column]) > parseFloat(value);
-        });
-        console.log('copia', filteredPlanetsList);
-        return;
-      } if (comparison === 'menor que') {
-        console.log(comparison);
-        filteredPlanetsList = filteredPlanetsList.filter((planet) => {
-          console.log(planet[column], value);
-          return parseFloat(planet[column]) < parseFloat(value);
-        });
-        console.log('copia', filteredPlanetsList);
-      }
+      newPlanetListToRender = applyNumericFilter(numericFilter, newPlanetListToRender);
     });
-    setPlanetsListToRender(filteredPlanetsList);
-  }, [numericFilters, filterByName, planets]);
+
+    if (Object.entries(sortPreference).length) {
+      newPlanetListToRender = applyOrderPreference(newPlanetListToRender, sortPreference);
+    }
+
+    setPlanetsListToRender(newPlanetListToRender);
+  }, [numericFilters, filterByName, planets, sortPreference]);
 
   const contextValue = {
     planets,
@@ -59,6 +65,8 @@ function PlanetsProvider({ children }) {
     planetsListToRender,
     numericFilters,
     setNumericFilters,
+    sortPreference,
+    setSortPreference,
   };
 
   return (

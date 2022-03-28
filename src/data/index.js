@@ -3,6 +3,6 @@ export const starWarsTableHeading = [
   'Terrain', 'Surface Water', 'Population', 'Films', 'Created', 'Edited', 'URL',
 ];
 
-export const columnList = [
+export const numericFiltersOptions = [
   'population', 'orbital_period', 'surface_water', 'diameter', 'rotation_period',
 ];

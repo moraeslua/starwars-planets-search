@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
-import { columnList } from '../data';
+import { numericFiltersOptions } from '../data';
+import Dropdown from './Dropdown';
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
   column: 'population',
@@ -8,22 +9,37 @@ const NUMERIC_FILTERS_INITIAL_VALUE = {
   value: 0,
 };
 
+const NUMERIC_ORDER_COLUMN_INITIAL_VALUE = {
+  column: 'population',
+  sort: 'ASC',
+};
+
 function Header() {
   const {
     filterByName, setFilterByName,
     numericFilters, setNumericFilters,
+    setSortPreference,
   } = useContext(PlanetsContext);
 
   const [localNumericFilters, setLocalNumericFilters] = useState(
     NUMERIC_FILTERS_INITIAL_VALUE,
   );
 
-  const columnListToRender = columnList.filter((columnItem) => !numericFilters
-    .map((filter) => filter.column)
-    .includes(columnItem));
+  const [localNumericOrderColumn, setlocalNumericOrderColumn] = useState(
+    NUMERIC_ORDER_COLUMN_INITIAL_VALUE,
+  );
 
-  const handleFilterByNumericValuesOnChange = ({ id, value }) => (
-    setLocalNumericFilters({ ...localNumericFilters, [id]: value }));
+  const numericFiltersOptionsToRender = numericFiltersOptions
+    .filter((columnItem) => !numericFilters.map((filter) => filter.column)
+      .includes(columnItem));
+
+  const handleFilterByNumericValuesOnChange = ({ name, value, id }) => {
+    // console.log('id: ', id);
+    if (id === 'column-sort' || id === 'sort-asc' || id === 'sort-desc') {
+      return setlocalNumericOrderColumn({ ...localNumericOrderColumn, [name]: value });
+    }
+    return setLocalNumericFilters({ ...localNumericFilters, [name]: value });
+  };
 
   const handleFilterButtonOnClick = () => {
     const newNumericFiltersList = [...numericFilters, localNumericFilters];
@@ -41,6 +57,10 @@ function Header() {
     setNumericFilters([]);
   };
 
+  const handleSortColumnOnClick = () => {
+    setSortPreference(localNumericOrderColumn);
+  };
+
   return (
     <section>
       <label htmlFor="name-filter">
@@ -54,39 +74,28 @@ function Header() {
           onChange={ ({ target: { value } }) => setFilterByName(value) }
         />
       </label>
-      <label htmlFor="column">
-        Coluna
-        <select
-          id="column"
-          value={ localNumericFilters.column }
-          onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
-          data-testid="column-filter"
-        >
-          {columnListToRender.map((option) => (
-            <option
-              key={ option }
-              value={ option }
-            >
-              {option}
-            </option>))}
-        </select>
-      </label>
-      <label htmlFor="comparison">
-        Operador
-        <select
-          id="comparison"
-          value={ localNumericFilters.comparison }
-          onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
-          data-testid="comparison-filter"
-        >
-          <option value="maior que">maior que</option>
-          <option value="menor que">menor que</option>
-          <option value="igual a">igual a</option>
-        </select>
-      </label>
+      <Dropdown
+        id="column-filter"
+        name="column"
+        label="Coluna"
+        value={ localNumericFilters.column }
+        options={ numericFiltersOptionsToRender }
+        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        testId="column-filter"
+      />
+      <Dropdown
+        id="comparison"
+        name="comparison"
+        label="Operador"
+        value={ localNumericFilters.comparison }
+        options={ ['maior que', 'menor que', 'igual a'] }
+        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        testId="comparison-filter"
+      />
       <label htmlFor="value">
         <input
           id="value"
+          name="value"
           type="number"
           value={ localNumericFilters.value }
           data-testid="value-filter"
@@ -106,6 +115,44 @@ function Header() {
         onClick={ handleRemoveAllFilters }
       >
         Remover todos os filtros
+      </button>
+      <Dropdown
+        id="column-sort"
+        name="column"
+        label="Ordenar"
+        value={ localNumericOrderColumn.column }
+        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        testId="column-sort"
+        options={ numericFiltersOptions }
+      />
+      <label htmlFor="sort-asc">
+        Ascendente
+        <input
+          id="sort-asc"
+          name="sort"
+          type="radio"
+          value="ASC"
+          data-testid="column-sort-input-asc"
+          onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        />
+      </label>
+      <label htmlFor="sort-desc">
+        Descendente
+        <input
+          id="sort-desc"
+          name="sort"
+          type="radio"
+          value="DESC"
+          data-testid="column-sort-input-desc"
+          onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        />
+      </label>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ handleSortColumnOnClick }
+      >
+        Ordenar
       </button>
       {numericFilters.map(({ column, comparison, value }) => (
         <div key={ column } data-testid="filter">
