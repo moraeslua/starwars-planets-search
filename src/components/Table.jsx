@@ -10,12 +10,14 @@ function Table() {
     <table>
       <thead>
         <tr>
-          {starWarsTableHeading.map((heading) => <th key={ heading }>{ heading }</th>)}
+          {starWarsTableHeading.map((heading) => (
+            <th key={heading}>{heading}</th>
+          ))}
         </tr>
       </thead>
       <tbody>
         {planetsListToRender.map((planet) => (
-          <tr key={ planet.name }>
+          <tr key={planet.name}>
             <td data-testid="planet-name">{planet.name}</td>
             <td>{planet.rotation_period}</td>
             <td>{planet.orbital_period}</td>

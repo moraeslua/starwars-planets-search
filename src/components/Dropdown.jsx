@@ -4,22 +4,20 @@ import PropTypes from 'prop-types';
 function Dropdown(props) {
   const { id, name, label, value, onChange, testId, options } = props;
   return (
-    <label htmlFor={ id }>
-      { label }
+    <label htmlFor={id}>
+      {label}
       <select
-        id={ id }
-        name={ name }
-        value={ value }
-        onChange={ onChange }
-        data-testid={ testId }
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
+        data-testid={testId}
       >
         {options.map((option) => (
-          <option
-            key={ option }
-            value={ option }
-          >
+          <option key={option} value={option}>
             {option}
-          </option>))}
+          </option>
+        ))}
       </select>
     </label>
   );
