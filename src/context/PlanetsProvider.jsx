@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
@@ -17,14 +17,18 @@ function PlanetsProvider({ children }) {
       return planetsListToFilter.filter(
         (planet) => parseFloat(planet[column]) === parseFloat(value),
       );
-    } if (comparison === 'maior que') {
-      return planetsListToFilter.filter((planet) => (
-        parseFloat(planet[column]) > parseFloat(value)));
-    } if (comparison === 'menor que') {
-      return planetsListToFilter.filter((planet) => (
-        parseFloat(planet[column]) < parseFloat(value)
-      ));
     }
+    if (comparison === 'maior que') {
+      return planetsListToFilter.filter(
+        (planet) => parseFloat(planet[column]) > parseFloat(value),
+      );
+    }
+    if (comparison === 'menor que') {
+      return planetsListToFilter.filter(
+        (planet) => parseFloat(planet[column]) < parseFloat(value),
+      );
+    }
+    return [];
   };
 
   const applyOrderPreference = (planetListToOrder, orderPreference) => {
@@ -32,45 +36,64 @@ function PlanetsProvider({ children }) {
     return planetListToOrder.sort((a, b) => {
       if (a[column] === 'unknown') return 1;
       if (b[column] === 'unknown') return NEGATIVE_ONE;
-      return sort === 'ASC' ? (
-        parseFloat(a[column]) - parseFloat(b[column])
-      ) : (
-        parseFloat(b[column]) - parseFloat(a[column])
-      );
+      return sort === 'ASC'
+        ? parseFloat(a[column]) - parseFloat(b[column])
+        : parseFloat(b[column]) - parseFloat(a[column]);
     });
   };
 
   useEffect(() => {
-    const planetsList = filterByName ? planets.filter(
-      (planet) => planet.name.toLowerCase().includes(filterByName.toLowerCase()),
-    ) : planets;
+    const planetsList = filterByName
+      ? planets.filter((planet) =>
+          planet.name.toLowerCase().includes(filterByName.toLowerCase()),
+        )
+      : planets;
 
     let newPlanetListToRender = [...planetsList];
     numericFilters.forEach((numericFilter) => {
-      newPlanetListToRender = applyNumericFilter(numericFilter, newPlanetListToRender);
+      newPlanetListToRender = applyNumericFilter(
+        numericFilter,
+        newPlanetListToRender,
+      );
     });
 
     if (Object.entries(sortPreference).length) {
-      newPlanetListToRender = applyOrderPreference(newPlanetListToRender, sortPreference);
+      newPlanetListToRender = applyOrderPreference(
+        newPlanetListToRender,
+        sortPreference,
+      );
     }
 
     setPlanetsListToRender(newPlanetListToRender);
   }, [numericFilters, filterByName, planets, sortPreference]);
 
-  const contextValue = {
-    planets,
-    setPlanets,
-    filterByName,
-    setFilterByName,
-    planetsListToRender,
-    numericFilters,
-    setNumericFilters,
-    sortPreference,
-    setSortPreference,
-  };
+  const contextValue = useMemo(
+    () => ({
+      planets,
+      setPlanets,
+      filterByName,
+      setFilterByName,
+      planetsListToRender,
+      numericFilters,
+      setNumericFilters,
+      sortPreference,
+      setSortPreference,
+    }),
+    [
+      planets,
+      setPlanets,
+      filterByName,
+      setFilterByName,
+      planetsListToRender,
+      numericFilters,
+      setNumericFilters,
+      sortPreference,
+      setSortPreference,
+    ],
+  );
 
   return (
-    <PlanetsContext.Provider value={ contextValue }>
+    <PlanetsContext.Provider value={contextValue}>
       {children}
     </PlanetsContext.Provider>
   );

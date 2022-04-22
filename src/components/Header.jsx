@@ -18,8 +18,10 @@ const NUMERIC_ORDER_COLUMN_INITIAL_VALUE = {
 
 function Header() {
   const {
-    filterByName, setFilterByName,
-    numericFilters, setNumericFilters,
+    filterByName,
+    setFilterByName,
+    numericFilters,
+    setNumericFilters,
     setSortPreference,
   } = useContext(PlanetsContext);
 
@@ -31,14 +33,18 @@ function Header() {
     NUMERIC_ORDER_COLUMN_INITIAL_VALUE,
   );
 
-  const numericFiltersOptionsToRender = numericFiltersOptions
-    .filter((columnItem) => !numericFilters.map((filter) => filter.column)
-      .includes(columnItem));
+  const numericFiltersOptionsToRender = numericFiltersOptions.filter(
+    (columnItem) =>
+      !numericFilters.map((filter) => filter.column).includes(columnItem),
+  );
 
   const handleFilterByNumericValuesOnChange = ({ name, value, id }) => {
     // console.log('id: ', id);
     if (id === 'column-sort' || id === 'sort-asc' || id === 'sort-desc') {
-      return setlocalNumericOrderColumn({ ...localNumericOrderColumn, [name]: value });
+      return setlocalNumericOrderColumn({
+        ...localNumericOrderColumn,
+        [name]: value,
+      });
     }
     return setLocalNumericFilters({ ...localNumericFilters, [name]: value });
   };
@@ -69,54 +75,54 @@ function Header() {
         label="Filtrar por nome"
         id="name-filter"
         type="text"
-        value={ filterByName }
+        value={filterByName}
         testId="name-filter"
-        onChange={ ({ target: { value } }) => setFilterByName(value) }
+        onChange={({ target: { value } }) => setFilterByName(value)}
       />
       <Dropdown
         id="column-filter"
         name="column"
         label="Coluna"
-        value={ localNumericFilters.column }
-        options={ numericFiltersOptionsToRender }
-        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        value={localNumericFilters.column}
+        options={numericFiltersOptionsToRender}
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
         testId="column-filter"
       />
       <Dropdown
         id="comparison"
         name="comparison"
         label="Operador"
-        value={ localNumericFilters.comparison }
-        options={ ['maior que', 'menor que', 'igual a'] }
-        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        value={localNumericFilters.comparison}
+        options={['maior que', 'menor que', 'igual a']}
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
         testId="comparison-filter"
       />
       <Input
         id="value"
         name="value"
         type="number"
-        value={ localNumericFilters.value }
+        value={localNumericFilters.value}
         testId="value-filter"
-        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
       />
       <Button
         label="Filtrar"
-        onClick={ handleFilterButtonOnClick }
+        onClick={handleFilterButtonOnClick}
         testId="button-filter"
       />
       <Button
         label="Remover todos os filtros"
         testId="button-remove-filters"
-        onClick={ handleRemoveAllFilters }
+        onClick={handleRemoveAllFilters}
       />
       <Dropdown
         id="column-sort"
         name="column"
         label="Ordenar"
-        value={ localNumericOrderColumn.column }
-        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        value={localNumericOrderColumn.column}
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
         testId="column-sort"
-        options={ numericFiltersOptions }
+        options={numericFiltersOptions}
       />
       <Input
         label="Ascendente"
@@ -125,7 +131,7 @@ function Header() {
         type="radio"
         value="ASC"
         testId="column-sort-input-asc"
-        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
       />
       <Input
         label="Descendente"
@@ -134,26 +140,19 @@ function Header() {
         type="radio"
         value="DESC"
         testId="column-sort-input-desc"
-        onChange={ ({ target }) => handleFilterByNumericValuesOnChange(target) }
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
       />
       <Button
         label="Ordenar"
         testId="column-sort-button"
-        onClick={ handleSortColumnOnClick }
+        onClick={handleSortColumnOnClick}
       />
       {numericFilters.map(({ column, comparison, value }) => (
-        <div key={ column } data-testid="filter">
+        <div key={column} data-testid="filter">
           <p>
-            {column}
-            {' '}
-            {comparison}
-            {' '}
-            {value}
+            {column} {comparison} {value}
           </p>
-          <Button
-            label="X"
-            onClick={ () => handleRemoveNumericFilter(column) }
-          />
+          <Button label="X" onClick={() => handleRemoveNumericFilter(column)} />
         </div>
       ))}
     </section>

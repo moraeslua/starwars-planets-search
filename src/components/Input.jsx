@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 function Input(props) {
   const { label, id, name, type, value, testId, onChange } = props;
   return (
-    <label htmlFor={ id }>
+    <label htmlFor={id}>
       {label}
       <input
-        id={ id }
-        name={ name }
-        type={ type }
-        value={ value }
-        data-testid={ testId }
-        onChange={ onChange }
+        id={id}
+        name={name}
+        type={type}
+        value={value}
+        data-testid={testId}
+        onChange={onChange}
       />
     </label>
   );
