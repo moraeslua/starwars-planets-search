@@ -4,6 +4,7 @@ import { numericFiltersOptions } from '../data';
 import Dropdown from './Dropdown';
 import Button from './Button';
 import Input from './Input';
+import { HeaderSection } from '../styles/header';
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
   column: 'population',
@@ -70,7 +71,7 @@ function Header() {
   };
 
   return (
-    <section>
+    <HeaderSection>
       <Input
         label="Filtrar por nome"
         id="name-filter"
@@ -155,7 +156,7 @@ function Header() {
           <Button label="X" onClick={() => handleRemoveNumericFilter(column)} />
         </div>
       ))}
-    </section>
+    </HeaderSection>
   );
 }
 

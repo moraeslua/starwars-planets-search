@@ -3,6 +3,7 @@ import Table from '../components/Table';
 import Header from '../components/Header';
 import getPlanetsInfo from '../services';
 import PlanetsContext from '../context/PlanetsContext';
+import { Card, Main } from '../styles/search';
 
 function Search() {
   const { setPlanets } = useContext(PlanetsContext);
@@ -16,10 +17,12 @@ function Search() {
   }, [setPlanets]);
 
   return (
-    <main>
-      <Header />
-      <Table />
-    </main>
+    <Main>
+      <Card>
+        <Header />
+        <Table />
+      </Card>
+    </Main>
   );
 }
 

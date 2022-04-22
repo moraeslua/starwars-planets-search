@@ -2,12 +2,13 @@ import React, { useContext } from 'react';
 // import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
 import { starWarsTableHeading } from '../data';
+import { Table as StyledTable } from '../styles/table';
 
 function Table() {
   const { planetsListToRender } = useContext(PlanetsContext);
 
   return (
-    <table>
+    <StyledTable>
       <thead>
         <tr>
           {starWarsTableHeading.map((heading) => (
@@ -34,7 +35,7 @@ function Table() {
           </tr>
         ))}
       </tbody>
-    </table>
+    </StyledTable>
   );
 }
 
