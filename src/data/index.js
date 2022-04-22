@@ -8,10 +8,6 @@ export const starWarsTableHeading = [
   'Terrain',
   'Surface Water',
   'Population',
-  'Films',
-  'Created',
-  'Edited',
-  'URL',
 ];
 
 export const numericFiltersOptions = [

@@ -6,7 +6,11 @@ const getPlanetsInfo = async () => {
   try {
     const response = await fetch(STAR_WARS_API_URL);
     const { results } = await response.json();
-    const newResults = results.map(({ residents, ...rest }) => ({ ...rest }));
+    const newResults = results.map(
+      ({ residents, url, edited, created, films, ...rest }) => ({
+        ...rest,
+      }),
+    );
     return newResults.sort((a, b) => {
       if (a.name < b.name) {
         return NEGATIVE_ONE;
