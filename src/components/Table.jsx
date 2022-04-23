@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-// import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
 import { starWarsTableHeading } from '../data';
 import { Table as StyledTable, Thead, Tbody } from '../styles/table';

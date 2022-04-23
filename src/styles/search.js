@@ -14,7 +14,7 @@ export const Main = styled.main`
 
 export const Card = styled.div`
   --card-border-radius: 8px;
-  --card-background-color: rgba(255, 255, 255);
+  --card-background-color: rgba(13, 13, 13, 0.8);
   display: flex;
   flex-direction: column;
   align-items: center;
