@@ -73,6 +73,8 @@ export const FiltersButton = styled(Button)`
   background-color: transparent;
   font-size: 15px;
   transition: 0.5s ease-out;
+  margin-top: ${(props) =>
+    props.testId === 'button-remove-filters' ? '30px' : '0px'};
 
   &:hover {
     background-color: #f2ce1b;
@@ -111,4 +113,12 @@ export const Wrapper = styled.div`
 export const RadioButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+export const FilterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 110px;
+  margin-top: 20px;
 `;
