@@ -18,8 +18,8 @@ function Search() {
 
   return (
     <Main>
+      <Header />
       <Card>
-        <Header />
         <Table />
       </Card>
     </Main>

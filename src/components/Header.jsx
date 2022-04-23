@@ -1,10 +1,17 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { numericFiltersOptions } from '../data';
-import Dropdown from './Dropdown';
 import Button from './Button';
-import Input from './Input';
-import { HeaderSection } from '../styles/header';
+import Logo from '../images/planets_search_logo.png';
+import {
+  FilterByNameInput,
+  HeaderSection,
+  FilterByComparisonDropdown,
+  FilterByComparisonInput,
+  FiltersButton,
+  RadioButton,
+  StarWars,
+} from '../styles/header';
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
   column: 'population',
@@ -40,7 +47,6 @@ function Header() {
   );
 
   const handleFilterByNumericValuesOnChange = ({ name, value, id }) => {
-    // console.log('id: ', id);
     if (id === 'column-sort' || id === 'sort-asc' || id === 'sort-desc') {
       return setlocalNumericOrderColumn({
         ...localNumericOrderColumn,
@@ -72,60 +78,24 @@ function Header() {
 
   return (
     <HeaderSection>
-      <Input
-        label="Filtrar por nome"
+      <StarWars src={Logo} alt="StarWars Planets Search" />
+      <FilterByNameInput
         id="name-filter"
+        placeholder="Filter By Name"
         type="text"
         value={filterByName}
         testId="name-filter"
         onChange={({ target: { value } }) => setFilterByName(value)}
       />
-      <Dropdown
-        id="column-filter"
-        name="column"
-        label="Coluna"
-        value={localNumericFilters.column}
-        options={numericFiltersOptionsToRender}
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-        testId="column-filter"
-      />
-      <Dropdown
-        id="comparison"
-        name="comparison"
-        label="Operador"
-        value={localNumericFilters.comparison}
-        options={['maior que', 'menor que', 'igual a']}
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-        testId="comparison-filter"
-      />
-      <Input
-        id="value"
-        name="value"
-        type="number"
-        value={localNumericFilters.value}
-        testId="value-filter"
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-      />
-      <Button
-        label="Filtrar"
-        onClick={handleFilterButtonOnClick}
-        testId="button-filter"
-      />
-      <Button
-        label="Remover todos os filtros"
-        testId="button-remove-filters"
-        onClick={handleRemoveAllFilters}
-      />
-      <Dropdown
+      <FilterByComparisonDropdown
         id="column-sort"
         name="column"
-        label="Ordenar"
         value={localNumericOrderColumn.column}
         onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
         testId="column-sort"
         options={numericFiltersOptions}
       />
-      <Input
+      <RadioButton
         label="Ascendente"
         id="sort-asc"
         name="sort"
@@ -134,7 +104,7 @@ function Header() {
         testId="column-sort-input-asc"
         onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
       />
-      <Input
+      <RadioButton
         label="Descendente"
         id="sort-desc"
         name="sort"
@@ -143,10 +113,43 @@ function Header() {
         testId="column-sort-input-desc"
         onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
       />
-      <Button
-        label="Ordenar"
+      <FiltersButton
+        label="Order By"
         testId="column-sort-button"
         onClick={handleSortColumnOnClick}
+      />
+      <FilterByComparisonDropdown
+        id="column-filter"
+        name="column"
+        value={localNumericFilters.column}
+        options={numericFiltersOptionsToRender}
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
+        testId="column-filter"
+      />
+      <FilterByComparisonDropdown
+        id="comparison"
+        name="comparison"
+        value={localNumericFilters.comparison}
+        options={['maior que', 'menor que', 'igual a']}
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
+        testId="comparison-filter"
+      />
+      <FilterByComparisonInput
+        id="value"
+        testId="value-filter"
+        type="number"
+        value={localNumericFilters.value}
+        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
+      />
+      <FiltersButton
+        label="Filter By Numbers"
+        onClick={handleFilterButtonOnClick}
+        testId="button-filter"
+      />
+      <FiltersButton
+        label="Remove All Filters"
+        testId="button-remove-filters"
+        onClick={handleRemoveAllFilters}
       />
       {numericFilters.map(({ column, comparison, value }) => (
         <div key={column} data-testid="filter">
