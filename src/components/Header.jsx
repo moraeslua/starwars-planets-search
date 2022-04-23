@@ -147,6 +147,7 @@ function Header() {
         />
         <FilterByComparisonInput
           id="value"
+          name="value"
           testId="value-filter"
           type="number"
           value={localNumericFilters.value}

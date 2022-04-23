@@ -9,6 +9,7 @@ export const Main = styled.main`
   background-size: cover;
   width: 100vw;
   height: 100vh;
+  padding: 0 50px;
 `;
 
 export const Card = styled.div`
@@ -20,11 +21,10 @@ export const Card = styled.div`
   border-radius: var(--card-border-radius);
   overflow-x: scroll;
   width: 75%;
-  padding: 30px;
-  /* align-self: center;  */
+  padding: 20px 30px;
   height: fit-content;
-  margin: 30px;
-  margin-top: 135px;
+  margin-top: 130px;
+  margin-left: 50px;
 
   &::-webkit-scrollbar {
     width: 20px;

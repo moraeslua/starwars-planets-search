@@ -97,8 +97,7 @@ export const RadioButton = styled(Input)`
 `;
 
 export const StarWars = styled.img`
-  width: 220px;
-  height: 150px;
+  height: 145px;
 `;
 
 export const Wrapper = styled.div`
