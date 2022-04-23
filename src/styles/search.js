@@ -3,6 +3,7 @@ import Background from '../images/sky-background.jpg';
 
 export const Main = styled.main`
   display: flex;
+  justify-content: center;
   background-image: url(${Background});
   background-repeat: no-repeat;
   background-size: cover;
@@ -20,9 +21,10 @@ export const Card = styled.div`
   overflow-x: scroll;
   width: 75%;
   padding: 30px;
-  /* align-self: center; */
+  /* align-self: center;  */
   height: fit-content;
-  margin: 10px;
+  margin: 30px;
+  margin-top: 135px;
 
   &::-webkit-scrollbar {
     width: 20px;

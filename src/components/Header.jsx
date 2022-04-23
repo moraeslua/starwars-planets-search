@@ -8,9 +8,11 @@ import {
   HeaderSection,
   FilterByComparisonDropdown,
   FilterByComparisonInput,
+  RadioButtonsWrapper,
   FiltersButton,
   RadioButton,
   StarWars,
+  Wrapper,
 } from '../styles/header';
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
@@ -87,60 +89,70 @@ function Header() {
         testId="name-filter"
         onChange={({ target: { value } }) => setFilterByName(value)}
       />
-      <FilterByComparisonDropdown
-        id="column-sort"
-        name="column"
-        value={localNumericOrderColumn.column}
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-        testId="column-sort"
-        options={numericFiltersOptions}
-      />
-      <RadioButton
-        label="Ascendente"
-        id="sort-asc"
-        name="sort"
-        type="radio"
-        value="ASC"
-        testId="column-sort-input-asc"
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-      />
-      <RadioButton
-        label="Descendente"
-        id="sort-desc"
-        name="sort"
-        type="radio"
-        value="DESC"
-        testId="column-sort-input-desc"
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-      />
+      <Wrapper>
+        <FilterByComparisonDropdown
+          id="column-sort"
+          name="column"
+          value={localNumericOrderColumn.column}
+          onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
+          testId="column-sort"
+          options={numericFiltersOptions}
+        />
+        <RadioButtonsWrapper>
+          <RadioButton
+            label="Ascendente"
+            id="sort-asc"
+            name="sort"
+            type="radio"
+            value="ASC"
+            testId="column-sort-input-asc"
+            onChange={({ target }) =>
+              handleFilterByNumericValuesOnChange(target)
+            }
+          />
+          <RadioButton
+            label="Descendente"
+            id="sort-desc"
+            name="sort"
+            type="radio"
+            value="DESC"
+            testId="column-sort-input-desc"
+            onChange={({ target }) =>
+              handleFilterByNumericValuesOnChange(target)
+            }
+          />
+        </RadioButtonsWrapper>
+      </Wrapper>
       <FiltersButton
         label="Order By"
         testId="column-sort-button"
         onClick={handleSortColumnOnClick}
       />
-      <FilterByComparisonDropdown
-        id="column-filter"
-        name="column"
-        value={localNumericFilters.column}
-        options={numericFiltersOptionsToRender}
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-        testId="column-filter"
-      />
-      <FilterByComparisonDropdown
-        id="comparison"
-        name="comparison"
-        value={localNumericFilters.comparison}
-        options={['maior que', 'menor que', 'igual a']}
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-        testId="comparison-filter"
-      />
-      <FilterByComparisonInput
-        id="value"
-        testId="value-filter"
-        type="number"
-        value={localNumericFilters.value}
-        onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
-      />
+      <Wrapper>
+        <FilterByComparisonDropdown
+          id="column-filter"
+          name="column"
+          value={localNumericFilters.column}
+          options={numericFiltersOptionsToRender}
+          onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
+          testId="column-filter"
+        />
+        <FilterByComparisonDropdown
+          id="comparison"
+          name="comparison"
+          value={localNumericFilters.comparison}
+          options={['maior que', 'menor que', 'igual a']}
+          onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
+          testId="comparison-filter"
+        />
+        <FilterByComparisonInput
+          id="value"
+          testId="value-filter"
+          type="number"
+          value={localNumericFilters.value}
+          onChange={({ target }) => handleFilterByNumericValuesOnChange(target)}
+        />
+      </Wrapper>
       <FiltersButton
         label="Filter By Numbers"
         onClick={handleFilterButtonOnClick}
