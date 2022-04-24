@@ -13,17 +13,17 @@ function PlanetsProvider({ children }) {
 
   const applyNumericFilter = (numericFilter, planetsListToFilter) => {
     const { column, comparison, value } = numericFilter;
-    if (comparison === 'igual a') {
+    if (comparison === 'equal') {
       return planetsListToFilter.filter(
         (planet) => parseFloat(planet[column]) === parseFloat(value),
       );
     }
-    if (comparison === 'maior que') {
+    if (comparison === 'greater than') {
       return planetsListToFilter.filter(
         (planet) => parseFloat(planet[column]) > parseFloat(value),
       );
     }
-    if (comparison === 'menor que') {
+    if (comparison === 'less than') {
       return planetsListToFilter.filter(
         (planet) => parseFloat(planet[column]) < parseFloat(value),
       );

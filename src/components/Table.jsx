@@ -1,21 +1,21 @@
 import React, { useContext } from 'react';
-// import PropTypes from 'prop-types';
 import PlanetsContext from '../context/PlanetsContext';
 import { starWarsTableHeading } from '../data';
+import { Table as StyledTable, Thead, Tbody } from '../styles/table';
 
 function Table() {
   const { planetsListToRender } = useContext(PlanetsContext);
 
   return (
-    <table>
-      <thead>
+    <StyledTable>
+      <Thead>
         <tr>
           {starWarsTableHeading.map((heading) => (
             <th key={heading}>{heading}</th>
           ))}
         </tr>
-      </thead>
-      <tbody>
+      </Thead>
+      <Tbody>
         {planetsListToRender.map((planet) => (
           <tr key={planet.name}>
             <td data-testid="planet-name">{planet.name}</td>
@@ -27,14 +27,10 @@ function Table() {
             <td>{planet.terrain}</td>
             <td>{planet.surface_water}</td>
             <td>{planet.population}</td>
-            <td>{planet.films}</td>
-            <td>{planet.created}</td>
-            <td>{planet.edited}</td>
-            <td>{planet.url}</td>
           </tr>
         ))}
-      </tbody>
-    </table>
+      </Tbody>
+    </StyledTable>
   );
 }
 

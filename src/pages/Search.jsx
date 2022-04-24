@@ -1,8 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import Table from '../components/Table';
-import Header from '../components/Header';
+import FiltersControls from '../components/FiltersControls';
 import getPlanetsInfo from '../services';
 import PlanetsContext from '../context/PlanetsContext';
+import { Card, Main, PageLeftField } from '../styles/search';
+import Filters from '../components/Filters';
 
 function Search() {
   const { setPlanets } = useContext(PlanetsContext);
@@ -16,10 +18,15 @@ function Search() {
   }, [setPlanets]);
 
   return (
-    <main>
-      <Header />
-      <Table />
-    </main>
+    <Main>
+      <FiltersControls />
+      <PageLeftField>
+        <Filters />
+        <Card>
+          <Table />
+        </Card>
+      </PageLeftField>
+    </Main>
   );
 }
 
