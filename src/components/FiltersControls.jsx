@@ -7,13 +7,13 @@ import {
   FilterByComparisonInput,
   RadioButtonsWrapper,
   FilterByNameInput,
-  HeaderSection,
+  ControlsSection,
   FiltersButton,
   FilterWrapper,
   RadioButton,
-  StarWars,
+  StarWarsImg,
   Wrapper,
-} from '../styles/header';
+} from '../styles/controls';
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
   column: 'population',
@@ -26,7 +26,7 @@ const NUMERIC_ORDER_COLUMN_INITIAL_VALUE = {
   sort: 'ASC',
 };
 
-function Header() {
+function FiltersControls() {
   const {
     filterByName,
     setFilterByName,
@@ -84,8 +84,8 @@ function Header() {
   };
 
   return (
-    <HeaderSection>
-      <StarWars src={Logo} alt="StarWars Planets Search" />
+    <ControlsSection>
+      <StarWarsImg src={Logo} alt="StarWars Planets Search" />
       <FilterByNameInput
         id="name-filter"
         placeholder="Filter By Name"
@@ -108,7 +108,7 @@ function Header() {
           />
           <RadioButtonsWrapper>
             <RadioButton
-              label="Ascendente"
+              label="Ascending"
               id="sort-asc"
               name="sort"
               type="radio"
@@ -119,7 +119,7 @@ function Header() {
               }
             />
             <RadioButton
-              label="Descendente"
+              label="Descendant"
               id="sort-desc"
               name="sort"
               type="radio"
@@ -181,8 +181,8 @@ function Header() {
         testId="button-remove-filters"
         onClick={handleRemoveAllFilters}
       />
-    </HeaderSection>
+    </ControlsSection>
   );
 }
 
-export default Header;
+export default FiltersControls;

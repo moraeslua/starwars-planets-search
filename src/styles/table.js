@@ -20,6 +20,6 @@ export const Tbody = styled.tbody`
     color: #999;
     padding: 0.8rem 0rem;
     text-align: center;
-    /* border: 1px solid rgba(153, 153, 153, 0.1); */
+    /* border: 1px solid rgba(153, 153, 153, 0.1);   */
   }
 `;

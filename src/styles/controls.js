@@ -3,7 +3,7 @@ import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
 import Button from '../components/Button';
 
-export const HeaderSection = styled.section`
+export const ControlsSection = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -104,7 +104,7 @@ export const RadioButton = styled(Input)`
   }
 `;
 
-export const StarWars = styled.img`
+export const StarWarsImg = styled.img`
   height: 145px;
 `;
 

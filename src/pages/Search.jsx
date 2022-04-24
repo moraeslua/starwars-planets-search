@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Table from '../components/Table';
-import Header from '../components/Header';
+import FiltersControls from '../components/FiltersControls';
 import getPlanetsInfo from '../services';
 import PlanetsContext from '../context/PlanetsContext';
 import { Card, Main, PageLeftField } from '../styles/search';
@@ -19,7 +19,7 @@ function Search() {
 
   return (
     <Main>
-      <Header />
+      <FiltersControls />
       <PageLeftField>
         <Filters />
         <Card>
