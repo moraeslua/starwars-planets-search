@@ -10,17 +10,20 @@ export const HeaderSection = styled.section`
   align-items: center;
   height: 85%;
   margin: 30px;
+  color: #fff;
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
 export const FilterByNameInput = styled(Input)`
   border: none;
+  color: #fff;
   background-color: #242424;
   border-bottom: 4px solid #fff;
   border-radius: 5px 5px 0 0;
   width: 350px;
   height: 50px;
   text-align: center;
+  font-size: 16px;
 
   &:focus {
     border-bottom: 4px solid #f2ce1b;
@@ -29,6 +32,7 @@ export const FilterByNameInput = styled(Input)`
 
 export const FilterByComparisonDropdown = styled(Dropdown)`
   border: none;
+  color: #fff;
   background-color: #242424;
   border-bottom: 4px solid #fff;
   border-radius: 5px 5px 0 0;
@@ -43,6 +47,7 @@ export const FilterByComparisonDropdown = styled(Dropdown)`
 
 export const FilterByComparisonInput = styled(Input)`
   border: none;
+  color: #fff;
   background-color: #242424;
   border-bottom: 4px solid #fff;
   border-radius: 5px 5px 0 0;
@@ -67,6 +72,7 @@ export const FilterByComparisonInput = styled(Input)`
 
 export const FiltersButton = styled(Button)`
   border: 1.5px solid #f2ce1b;
+  color: #fff;
   cursor: pointer;
   width: 350px;
   height: 40px;

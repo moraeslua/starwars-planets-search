@@ -9,7 +9,17 @@ export const Main = styled.main`
   background-size: cover;
   width: 100vw;
   height: 100vh;
-  padding: 0 50px;
+  padding: 0 90px;
+`;
+
+export const PageLeftField = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  margin-bottom: 50px;
+  margin-top: 150px;
+  width: 75%;
+  justify-content: flex-start;
 `;
 
 export const Card = styled.div`
@@ -20,15 +30,13 @@ export const Card = styled.div`
   background-color: var(--card-background-color);
   border-radius: var(--card-border-radius);
   overflow-x: scroll;
-  width: 75%;
+  width: 100%;
   padding: 20px 30px;
   height: fit-content;
-  margin-top: 130px;
-  margin-left: 50px;
 
   &::-webkit-scrollbar {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
   }
 
   &::-webkit-scrollbar-track {
@@ -37,7 +45,7 @@ export const Card = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #2a3641;
+    background-color: #999;
     border-radius: 20px;
     border: 3px solid var(--card-background-color);
   }

@@ -1,14 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { numericFiltersOptions } from '../data';
-import Button from './Button';
 import Logo from '../images/planets_search_logo.png';
 import {
-  FilterByNameInput,
-  HeaderSection,
   FilterByComparisonDropdown,
   FilterByComparisonInput,
   RadioButtonsWrapper,
+  FilterByNameInput,
+  HeaderSection,
   FiltersButton,
   FilterWrapper,
   RadioButton,
@@ -18,7 +17,7 @@ import {
 
 const NUMERIC_FILTERS_INITIAL_VALUE = {
   column: 'population',
-  comparison: 'maior que',
+  comparison: 'greater than',
   value: 0,
 };
 
@@ -44,9 +43,13 @@ function Header() {
     NUMERIC_ORDER_COLUMN_INITIAL_VALUE,
   );
 
-  const numericFiltersOptionsToRender = numericFiltersOptions.filter(
-    (columnItem) =>
-      !numericFilters.map((filter) => filter.column).includes(columnItem),
+  const numericFiltersOptionsToRender = useMemo(
+    () =>
+      numericFiltersOptions.filter(
+        (columnItem) =>
+          !numericFilters.map((filter) => filter.column).includes(columnItem),
+      ),
+    [numericFilters],
   );
 
   const handleFilterByNumericValuesOnChange = ({ name, value, id }) => {
@@ -59,15 +62,16 @@ function Header() {
     return setLocalNumericFilters({ ...localNumericFilters, [name]: value });
   };
 
-  const handleFilterButtonOnClick = () => {
-    const newNumericFiltersList = [...numericFilters, localNumericFilters];
-    setNumericFilters(newNumericFiltersList);
-  };
+  useEffect(() => {
+    setLocalNumericFilters((prev) => ({
+      ...prev,
+      column: numericFiltersOptionsToRender[0],
+    }));
+  }, [numericFilters, numericFiltersOptionsToRender]);
 
-  const handleRemoveNumericFilter = (columnToRemove) => {
-    const newNumericFiltersList = numericFilters.filter(
-      ({ column }) => column !== columnToRemove,
-    );
+  const handleFilterButtonOnClick = () => {
+    if (!localNumericFilters.column) return;
+    const newNumericFiltersList = [...numericFilters, localNumericFilters];
     setNumericFilters(newNumericFiltersList);
   };
 
@@ -149,7 +153,7 @@ function Header() {
             id="comparison"
             name="comparison"
             value={localNumericFilters.comparison}
-            options={['maior que', 'menor que', 'igual a']}
+            options={['greater than', 'less than', 'equal']}
             onChange={({ target }) =>
               handleFilterByNumericValuesOnChange(target)
             }
@@ -177,14 +181,6 @@ function Header() {
         testId="button-remove-filters"
         onClick={handleRemoveAllFilters}
       />
-      {numericFilters.map(({ column, comparison, value }) => (
-        <div key={column} data-testid="filter">
-          <p>
-            {column} {comparison} {value}
-          </p>
-          <Button label="X" onClick={() => handleRemoveNumericFilter(column)} />
-        </div>
-      ))}
     </HeaderSection>
   );
 }
